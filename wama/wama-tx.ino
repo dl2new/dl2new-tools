@@ -28,6 +28,7 @@ int led_status_pre = 0;
 char led_status_c[50];
 long loop_cnt = 0;
 int change_cnt = 0;
+int last_change_cnt = 0;
 
 int second_pre; /* Hilfsvariable, damit der Sprung von 60 auf 0 erkannt wird */
 
@@ -41,14 +42,12 @@ long previousMillis;
 long currentMillis;
 long diffMillis;
 
-
 void handleRoot() {
 	digitalWrite ( LED_BUILTIN, 0 );
 	char temp[800];
 	int sec = millis() / 1000;
 	int min = sec / 60;
 	int hr = min / 60;
-  
 
   if(led_an_aus_blink == 0) {
     strcpy(led_status_c, "Laeuft noch");
@@ -76,12 +75,12 @@ void handleRoot() {
     <h1>Waschmaschinenstatus via ESP8266</h1>\
     <p>Aktuelle Zeit: %02d:%02d</p>\
     <p>Laufzeit Modul: %02d:%02d:%02d</p>\
-    <p>Maschine Status: %s (%02d)</p>\
+    <p>Maschine Status: %s (%02d) [%02d]</p>\
     <p>\
   </body>\
 </html>",
 
-		dateTime.hour, dateTime.minute, hr, min % 60, sec % 60, led_status_c, led_an_aus_blink
+		dateTime.hour, dateTime.minute, hr, min % 60, sec % 60, led_status_c, led_an_aus_blink, last_change_cnt
 	);
 	server.send ( 200, "text/html", temp );
 	digitalWrite ( LED_BUILTIN, 1 );
@@ -172,6 +171,7 @@ void loop ( void ) {
     }
 
     loop_cnt = 0;
+    last_change_cnt = change_cnt;
     change_cnt = 0;
     updateTime();
   }
