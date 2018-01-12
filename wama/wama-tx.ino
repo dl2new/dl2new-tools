@@ -2,7 +2,7 @@
  * Statusermittlung ueber Fotodiode
  * Darstellung auf Web-Seite
  * 
- * DL2NEW, V1, 06.01.2017
+ * DL2NEW, V1, 12.01.2017
  * 
  * Tmp: const int led = 13; D7
  * 
@@ -16,7 +16,7 @@
 #include <NTPtimeESP.h>
 
 const char *ssid = "xxx";
-const char *password = "xxxf";
+const char *password = "xxx";
 
 /* NodeMCU Pin auf IDE: D2=4 */
 const int photo_pin = 4; /* Fotodiode: Wenn auf GND, dann Licht empfangen */
@@ -43,19 +43,21 @@ long currentMillis;
 long diffMillis;
 long startMillis = 0; /* Wird immer beim Wechsel auf An gesetzt */
 
+int sec, min, hr;
+
 void handleRoot() {
 	digitalWrite ( LED_BUILTIN, 0 );
 	char temp[800];
 	
 	if(led_an_aus_blink == 0) { /* LED An */
-	    int sec = (millis() - startMillis) / 1000;
-	    int min = sec / 60;
-	    int hr = min / 60;
+	    sec = (millis() - startMillis) / 1000;
+	    min = sec / 60;
+	    hr = min / 60;
 	}
 	else { /* LED Aus oder blinkt */
-	    int sec = 0;
-	    int min = 0;
-	    int hr = 0;
+	    sec = 0;
+	    min = 0;
+	    hr = 0;
 	}
 
   if(led_an_aus_blink == 0) {
@@ -179,10 +181,10 @@ void loop ( void ) {
         led_an_aus_blink = 2;
       }
       else {
-	if(led_an_aus_blink != 0) { /* nur beim ersten Switch auf AN wird der Wert gesetzt */
-	    startMillis = millis();
-	}
-	led_an_aus_blink = 0; /* ueber 1000 Impulse = LED an */
+	      if(led_an_aus_blink != 0) { /* nur beim ersten Switch auf AN wird der Wert gesetzt */
+	          startMillis = millis();
+	      }
+	      led_an_aus_blink = 0; /* ueber 1000 Impulse = LED an */
       }
     }
 
