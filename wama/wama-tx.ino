@@ -43,19 +43,21 @@ long currentMillis;
 long diffMillis;
 long startMillis = 0; /* Wird immer beim Wechsel auf An gesetzt */
 
+int sec, min, hr;
+
 void handleRoot() {
 	digitalWrite ( LED_BUILTIN, 0 );
 	char temp[800];
 	
 	if(led_an_aus_blink == 0) { /* LED An */
-	    int sec = (millis() - startMillis) / 1000;
-	    int min = sec / 60;
-	    int hr = min / 60;
+	    sec = (millis() - startMillis) / 1000;
+	    min = sec / 60;
+	    hr = min / 60;
 	}
 	else { /* LED Aus oder blinkt */
-	    int sec = 0;
-	    int min = 0;
-	    int hr = 0;
+	    sec = 0;
+	    min = 0;
+	    hr = 0;
 	}
 
   if(led_an_aus_blink == 0) {
