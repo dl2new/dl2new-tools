@@ -183,7 +183,7 @@ void loop ( void ) {
   /* nach 2 Minuten Zeit neu abgleichen */
   /* 100.000 = 1s   6.000.000 = 60s*/   
   if(ntp_cnt == 12000000) {
-    char currentTime[10];
+    char currentTime[20];
     sprintf(currentTime, "ActTime %02d:%02d:%02d", dateTime.hour, dateTime.minute, dateTime.second);
     Serial.println(currentTime);
     Serial.println("NTP Zeit neu abgelichen");
