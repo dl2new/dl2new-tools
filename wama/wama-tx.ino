@@ -41,13 +41,22 @@ strDateTime dateTime;
 long previousMillis;
 long currentMillis;
 long diffMillis;
+long startMillis = 0 /* Wird immer beim Wechsel auf An gesetzt */
 
 void handleRoot() {
 	digitalWrite ( LED_BUILTIN, 0 );
 	char temp[800];
-	int sec = millis() / 1000;
-	int min = sec / 60;
-	int hr = min / 60;
+	
+	if(led_an_aus_blink == 0) { /* LED An */
+	    int sec = (millis() - startMillis) / 1000;
+	    int min = sec / 60;
+	    int hr = min / 60;
+	}
+	else { /* LED Aus oder blinkt */
+	    int sec = 0;
+	    int min = 0;
+	    int hr = 0;
+	}
 
   if(led_an_aus_blink == 0) {
     strcpy(led_status_c, "Laeuft noch");
@@ -74,7 +83,7 @@ void handleRoot() {
   <body>\
     <h1>Waschmaschinenstatus via ESP8266</h1>\
     <p>Aktuelle Zeit: %02d:%02d</p>\
-    <p>Laufzeit Modul: %02d:%02d:%02d</p>\
+    <p>Laufzeit seit Start: %02d:%02d:%02d</p>\
     <p>Maschine Status: %s (%02d) [%02d]</p>\
     <p>\
   </body>\
@@ -170,7 +179,10 @@ void loop ( void ) {
         led_an_aus_blink = 2;
       }
       else {
-        led_an_aus_blink = 0; /* ueber 1000 Impulse = LED an */
+	if(led_an_aus_blink != 0) { /* nur beim ersten Switch auf AN wird der Wert gesetzt */
+	    startMillis = millis();
+	}
+	led_an_aus_blink = 0; /* ueber 1000 Impulse = LED an */
       }
     }
 
