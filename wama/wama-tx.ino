@@ -83,6 +83,10 @@ void handleRoot() {
 		dateTime.hour, dateTime.minute, hr, min % 60, sec % 60, led_status_c, led_an_aus_blink, last_change_cnt
 	);
 	server.send ( 200, "text/html", temp );
+	
+        Serial.print("LastChangeCnt Web: );
+        Serial.println(last_change_cnt);
+	
 	digitalWrite ( LED_BUILTIN, 1 );
 }
 
