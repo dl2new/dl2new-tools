@@ -173,11 +173,11 @@ void loop ( void ) {
     }
   }
   else {
-    if(change_cnt < 50) { /* wenige Impulse = LED aus/dunkel */
+    if(change_cnt < 400) { /* wenige Impulse = LED aus/dunkel */
       led_an_aus_blink = 1;
     }
     else {
-      if(change_cnt < 750) { /* um 500 Impulse = LED blinkt */
+      if(change_cnt < 800) { /* um 500 Impulse = LED blinkt */
         led_an_aus_blink = 2;
       }
       else {
