@@ -41,7 +41,7 @@ strDateTime dateTime;
 long previousMillis;
 long currentMillis;
 long diffMillis;
-long startMillis = 0 /* Wird immer beim Wechsel auf An gesetzt */
+long startMillis = 0; /* Wird immer beim Wechsel auf An gesetzt */
 
 void handleRoot() {
 	digitalWrite ( LED_BUILTIN, 0 );
@@ -93,7 +93,7 @@ void handleRoot() {
 	);
 	server.send ( 200, "text/html", temp );
 	
-        Serial.print("LastChangeCnt Web: );
+        Serial.print("LastChangeCnt Web: ");
         Serial.println(last_change_cnt);
 	
 	digitalWrite ( LED_BUILTIN, 1 );
