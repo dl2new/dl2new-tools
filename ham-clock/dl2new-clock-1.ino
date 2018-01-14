@@ -1,5 +1,5 @@
 /* Stationsuhr DL2NEW
-Test Anzeige
+ *  V1.0 14.01.2018
 */
 
 #include <Wire.h>
@@ -26,13 +26,12 @@ boolean usingInterrupt = false;
 void useInterrupt(boolean);  // Func prototype keeps Arduino 0023 happy
 
 // Baken
-char* callsign[19]={
+char *callsign[19]={
 "000000", " 4U1UN", " VE8AT", "  W6WX", " KH6RS", "  ZL6B", "VK6RBP", 
 "JA2IGY", "  RR9O", "  VR2B", "  4S7B", " ZS6DN", "  5Z4B", " 4X6TU", 
 "  OH2B", "  CS3B", " LU4AA", "  OA4B", "  YV5B"}; 
 
-char* qrg[6] = {"      ","14.100","18.110","21.150","24.930","28.200"};
-//char* qrg[6] = {"      ","20m","17m","15m","12m","10m"};
+char *qrg[6] = {"      ","14.100","18.110","21.150","24.930","28.200"};
 
 byte band, sekm,minm,feld,spalte,i;
 
@@ -234,7 +233,5 @@ void loop()                     // run over and over again
     lcd.print(qrg[band]);
     lcd.setCursor(14, 3);
     lcd.print(callsign[i]);
-
   }
-  
 }
