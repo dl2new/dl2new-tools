@@ -31,7 +31,7 @@ char *callsign[19]={
 "JA2IGY", "  RR9O", "  VR2B", "  4S7B", " ZS6DN", "  5Z4B", " 4X6TU", 
 "  OH2B", "  CS3B", " LU4AA", "  OA4B", "  YV5B"}; 
 
-char *qrg[6] = {"      ","14.100","18.110","21.150","24.930","28.200"};
+char *qrg[5] = {"14.100","18.110","21.150","24.930","28.200"};
 
 byte band, sekm,minm,feld,spalte,i;
 
@@ -65,7 +65,7 @@ void setup()
   pinMode(BAND_PIN, INPUT);       // Pin 2 ist INT0
   digitalWrite(BAND_PIN, HIGH);   // interner Pull up Widerstand auf 5V
   attachInterrupt(BAND_INTERRUPT, interruptRoutineBand, LOW);
-  band = 1;
+  band = 0;
   
   Serial.begin(115200);
   GPS.begin(9600);
@@ -76,7 +76,7 @@ void setup()
   lcd.setCursor(3, 1);
   lcd.print("GPS Stationsuhr");
   lcd.setCursor(3, 2);
-  lcd.print("V0.9 DL2NEW");
+  lcd.print("V1.0 DL2NEW");
   delay(5000);
   lcd.clear();
   lcd.setCursor(6, 0);
@@ -119,8 +119,8 @@ void interruptRoutineBand() {
     // innerhalb der entprellZeit nichts machen
     alteZeit = millis(); // letzte Schaltzeit merken   
     band++;
-    if (band > 5) {
-      band = 1;
+    if (band > 4) {
+      band = 0;
       }   
   //verarbeiten();
   }
@@ -210,7 +210,7 @@ void loop()                     // run over and over again
     lcd.print("m");
 
     // ncdxf bAKEN - Neu/Test
-    //band = 1;
+    //band = 0;
 
     minm = (int)GPS.minute % 3;
     sekm = (int)GPS.seconds / 10;
@@ -220,7 +220,7 @@ void loop()                     // run over and over again
 
     for (i=0;i<19;i++) {
       //Serial.println(matrix[i][spalte]);
-      if (matrix[i][spalte] == band) {
+      if (matrix[i][spalte] == (band+1)) {
         Serial.print("Matrix Zeile/Spalte: "); Serial.print(i); Serial.print("/"); Serial.print(spalte); Serial.print(" "); Serial.println(band);
         break;
       }
